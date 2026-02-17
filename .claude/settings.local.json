@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start \"\" \"C:/Users/wowo1/OneDrive/Desktop/Projects/FroggyCross/index.html\")"
+    ]
+  }
+}

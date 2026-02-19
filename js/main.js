@@ -24,6 +24,7 @@ const Game = {
         this.panels.classList.remove('hidden');
         this._createPanels();
         GameAudio.startMusic();
+        Renderer._fitToScreen();
     },
 
     _createPanels() {
@@ -154,6 +155,7 @@ const Game = {
         this.state = 'menu';
         this.overlay.classList.remove('hidden');
         this.panels.classList.add('hidden');
+        Renderer._fitToScreen();
         this.overlay.innerHTML =
             '<h1>Chicken Cross</h1>' +
             '<p>Wybierz kwot\u0119 i kliknij GO!</p>' +
@@ -170,6 +172,7 @@ const Game = {
 
     _showResults() {
         this.overlay.classList.remove('hidden');
+        Renderer._fitToScreen();
         let html = '<h1>Koniec rundy!</h1>';
         for (let p of Players.list) {
             if (!p.active) continue;

@@ -7,6 +7,34 @@ const Renderer = {
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = Config.CANVAS_W;
         this.canvas.height = Config.CANVAS_H;
+        this.container = document.getElementById('gameContainer');
+        this._fitToScreen();
+        window.addEventListener('resize', () => this._fitToScreen());
+    },
+
+    _fitToScreen() {
+        let panels = document.getElementById('playerPanels');
+        let panelH = panels && !panels.classList.contains('hidden') ? 90 : 0;
+        let borderY = 6;
+        let totalH = Config.CANVAS_H + borderY + panelH;
+
+        let scale = window.innerHeight / totalH;
+        let newCanvasW = Math.floor(window.innerWidth / scale) - 6;
+        if (newCanvasW < 550) newCanvasW = 550;
+
+        Config.CANVAS_W = newCanvasW;
+        Config.VISIBLE_COLS = Math.ceil(newCanvasW / Config.TILE) + 1;
+        this.canvas.width = newCanvasW;
+
+        let overlay = document.getElementById('overlay');
+        if (overlay) {
+            overlay.style.width = newCanvasW + 'px';
+            overlay.style.height = Config.CANVAS_H + 'px';
+        }
+
+        if (panels) panels.style.width = (newCanvasW + 6) + 'px';
+
+        this.container.style.transform = 'scale(' + scale + ')';
     },
 
     render(cameraX, score, highScore, countdown) {
@@ -377,10 +405,10 @@ const Renderer = {
 
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 18px "Courier New", monospace';
-        ctx.fillText('Droga: ' + score, 250, 32);
+        ctx.fillText('Droga: ' + score, W * 0.45, 32);
 
         ctx.fillStyle = '#ccc';
         ctx.font = '14px "Courier New", monospace';
-        ctx.fillText('Rekord: ' + highScore, 420, 32);
+        ctx.fillText('Rekord: ' + highScore, W - 130, 32);
     }
 };
